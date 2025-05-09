@@ -1,104 +1,46 @@
-import { ConnectWallet } from "@thirdweb-dev/react";
-import styles from "../styles/Home.module.css";
-import Image from "next/image";
-import { NextPage } from "next";
+import { useAddress, useMetamask, useCoinbaseWallet, useDisconnect } from "@thirdweb-dev/react";
 
-const Home: NextPage = () => {
+export default function Home() {
+  const address = useAddress();
+  const connectMetaMask = useMetamask();
+  const connectCoinbase = useCoinbaseWallet();
+  const disconnect = useDisconnect();
+
+  // Fake AI Yield Data
+  const strategies = [
+    { chain: "Solana", apy: "165%", protocol: "Babylon Bitcoin Staking" },
+    { chain: "Base L2", apy: "89%", protocol: "Aerodrome AI Arb" },
+  ];
+
+  // Fake Airdrop Claim
+  const claimAirdrop = () => {
+    window.open("https://forms.gle/YOUR_GOOGLE_FORM_LINK"); // Capture emails
+    alert("$10 airdrop pending! Check wallet in 24h.");
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>
-            Welcome to{" "}
-            <span className={styles.gradientText0}>
-              <a
-                href="https://thirdweb.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                thirdweb.
-              </a>
-            </span>
-          </h1>
-
-          <p className={styles.description}>
-            Get started by configuring your desired network in{" "}
-            <code className={styles.code}>src/index.js</code>, then modify the{" "}
-            <code className={styles.code}>src/App.js</code> file!
-          </p>
-
-          <div className={styles.connect}>
-            <ConnectWallet />
-          </div>
+    <div>
+      <h1>AI-Powered DeFi Staking</h1>
+      {!address ? (
+        <div>
+          <button onClick={connectMetaMask}>Connect MetaMask</button>
+          <button onClick={connectCoinbase}>Connect Coinbase</button>
         </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://portal.thirdweb.com/"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              src="/images/portal-preview.png"
-              alt="Placeholder preview of starter"
-              width={300}
-              height={200}
-            />
-            <div className={styles.cardText}>
-              <h2 className={styles.gradientText1}>Portal ➜</h2>
-              <p>
-                Guides, references, and resources that will help you build with
-                thirdweb.
-              </p>
+      ) : (
+        <div>
+          <p>Connected: {address}</p>
+          <button onClick={disconnect}>Disconnect</button>
+          <button onClick={claimAirdrop}>🎁 Claim $10 Airdrop</button>
+          
+          <h2>Top Yields</h2>
+          {strategies.map((strategy) => (
+            <div key={strategy.chain}>
+              <h3>{strategy.chain} ({strategy.apy})</h3>
+              <p>{strategy.protocol}</p>
             </div>
-          </a>
-
-          <a
-            href="https://thirdweb.com/dashboard"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              src="/images/dashboard-preview.png"
-              alt="Placeholder preview of starter"
-              width={300}
-              height={200}
-            />
-            <div className={styles.cardText}>
-              <h2 className={styles.gradientText2}>Dashboard ➜</h2>
-              <p>
-                Deploy, configure, and manage your smart contracts from the
-                dashboard.
-              </p>
-            </div>
-          </a>
-
-          <a
-            href="https://thirdweb.com/templates"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              src="/images/templates-preview.png"
-              alt="Placeholder preview of templates"
-              width={300}
-              height={200}
-            />
-            <div className={styles.cardText}>
-              <h2 className={styles.gradientText3}>Templates ➜</h2>
-              <p>
-                Discover and clone template projects showcasing thirdweb
-                features.
-              </p>
-            </div>
-          </a>
+          ))}
         </div>
-      </div>
-    </main>
+      )}
+    </div>
   );
-};
-
-export default Home;
+}
