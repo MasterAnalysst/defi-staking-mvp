@@ -10,14 +10,15 @@
     "export": "next export",
     "deploy": "next build && next export && npx thirdweb@latest upload out"
   },
-  "dependencies": {
-    "@thirdweb-dev/react": "^4",
-    "@thirdweb-dev/sdk": "^4",
-    "ethers": "^5",
-    "next": "^13",
-    "react": "^18.2",
-    "react-dom": "^18.2"
-  },
+ "dependencies": {
+  "next": "14.1.4",
+  "react": "18.2.0",
+  "react-dom": "18.2.0",
+  "@thirdweb-dev/react": "3.14.6",
+  "@thirdweb-dev/sdk": "3.14.6",
+  "typescript": "5.3.3",
+  "@types/react": "18.2.45"
+}
   "devDependencies": {
     "@types/node": "^18.11.11",
     "@types/react": "^18",
